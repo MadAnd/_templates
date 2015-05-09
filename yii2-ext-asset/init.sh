@@ -1,26 +1,33 @@
-#!/bin/sh
+#!/bin/env bash
 
-set -e
-
+# predefined variables
 GITHUB_USER=madand
 
-USER_INPUT=''
+###############################################################################
+
+# stop script on error
+set -e
+
+# USAGE: get_user_input VAR-NAME [PROMPT-TEXT]
+# DESCRIPTION: Prompt the user for input, with optional PROMPT-TEXT and sore it in the variable named VAR-NAME.
 get_user_input() {
-    echo -n "$1: "
-    read USER_INPUT
+    PROMPT_TEXT=${2:-''}
+    if [ "$PROMPT_TEXT" != "" ]; then
+        echo -n "$PROMPT_TEXT: "
+    fi
+
+    eval read $1
 }
 
 EXTKEY=$(basename "$PWD")
 NAMESPACE=$(echo "$EXTKEY" | tr -cd '[:alnum:]' | sed 's/^yii2//')
 
-get_user_input "ClassName"
-CLASS_NAME=$USER_INPUT
+# prompt user for needed values
+get_user_input CLASS_NAME "ClassName"
+get_user_input BOWER_NAME "bower-name"
+get_user_input ASSET_URL "asset-url"
 
-get_user_input "bower-name"
-BOWER_NAME=$USER_INPUT
-
-get_user_input "asset-url"
-ASSET_URL=$USER_INPUT
+mv src/Asset.php src/${CLASS_NAME}Asset.php
 
 find . -type f -print0 -not -name "init.sh" | xargs -0 sed -i'' \
     -e "s!{ext-key}!$EXTKEY!gI" \

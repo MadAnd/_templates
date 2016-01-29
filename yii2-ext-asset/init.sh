@@ -41,13 +41,14 @@ git init
 git add .
 git reset $0
 git commit -m 'initial commit'
+git tag 0.1.0
 
 # create github repo
 DESCRIPTION=$(sed -n '1s/# //p' README.md)
 curl -u $GITHUB_USER --data '{"name": "'$EXTKEY'", "description": "'"$DESCRIPTION"'"}' https://api.github.com/user/repos
 
 git remote add origin git@github.com:$GITHUB_USER/$EXTKEY.git
-git push --set-upstream origin master
+git push --all --set-upstream origin master
 
 rm $0
 

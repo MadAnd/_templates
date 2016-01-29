@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/MadAnd/{ext-key}
- * @copyright Copyright (c) 2015 Andriy Kmit' <dev@madand.net>
+ * @copyright Copyright (c) 2016 Andriy Kmit' <dev@madand.net>
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
